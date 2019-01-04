@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <link rel="stylesheet" href="styles.css">
+
+    <title>eXman, The Expense Manager</title>
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <p>eXman, The Expense Manager</p>
+
+    <!--Add buttons to initiate auth sequence and sign out-->
+    <button id="signin_button" style="display: none;">Sign In</button>
+    <button id="signout_button" style="display: none;">Sign Out</button>
+
+    <div id="tx_type_pie_chart_div"></div>
+    <div id="category_pie_chart_div"></div>
+
+    <pre id="content" style="white-space: pre-wrap;"></pre>
+
+    <script type="text/javascript" src="main.js"></script>
+
+    <script async defer src="https://apis.google.com/js/api.js" 
+      onload="this.onload=function(){};handleClientLoad()"
+      onreadystatechange="if (this.readyState === 'complete') this.onload()">
+    </script>
+  </body>
+
+</html>
