@@ -5,16 +5,18 @@
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="animate.min.css">
 
     <title>eXman, The Expense Manager</title>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   </head>
 
   <body>
       <nav class="navbar navbar-light bg-primary">
 
           <a class="navbar-brand" href="#">
-              e<img src="/eXman/images/145px-Orange_x.svg.png" width="30" height="30" class="d-inline-block align-top" alt="">
+              e<img src="145px-Orange_x.svg.png" width="30" height="30" class="d-inline-block align-top" alt="">
               man
             </a>
 
@@ -28,12 +30,17 @@
         </nav>
 
     <div>
-      <div id="tx_type_pie_chart_div" class="w-100"></div>
-      <div id="div_total_exp">
+      <div id="tx_type_pie_chart_div" class="w-100 animated show collapse multi-collapse"></div>
+      <div id="div_total_exp" >
 
-          <button id="btn_total_exp" class="btn btn-warning btn-block" type="submit"></button>
+          <button id="btn_total_exp" 
+            class="btn btn-warning btn-block animated" 
+            type="button" 
+            data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" aria-controls="tx_type_pie_chart_div expense_details">
+          </button>
 
-          <div id="expense_details" ></div>
+          <div id="expense_details" class="animated collapse multi-collapse" ></div>
+
       </div>
       <div id="category_pie_chart_div"></div>
 
