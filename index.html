@@ -24,11 +24,11 @@
             <p id="signInName" class="nav"></p>
 
             <form class="form-inline">
-              <button id="signin_button" class="btn btn-warning" type="submit">Sign In
+              <button id="signin_button" class="btn btn-warning" type="submit" >Sign In
                   <i class="fas fa-sign-in-alt"></i>
               </button>
                   <!--Add buttons to initiate auth sequence and sign out-->
-              <button id="signout_button" class="btn btn-outline-warning btn-sm" type="submit">Sign Out
+              <button id="signout_button" class="btn btn-outline-warning btn-sm" type="submit" style="display: none">Sign Out
                   <i class="fas fa-sign-out-alt"></i>
               </button>
             </form>
@@ -68,7 +68,7 @@
         <form>
           <div class="form-group">
             <label for="f_expense_date" class="col-form-label">Date:</label>
-            <input type="date" class="form-control" id="f_expense_date">
+            <input type="date" data-date-format="DD MMMM YYYY" class="form-control" id="f_expense_date">
           </div>
           <div class="form-group">
               <label for="f_expense_amount" class="col-form-label">Amount:</label>

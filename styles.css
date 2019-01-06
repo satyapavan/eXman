@@ -43,3 +43,14 @@ nav > a {
     font-weight: bold;
     color: orange;
 }
+
+  /* Sets the maximum height of the entire modal to 95% of the screen height */
+  .modal-content {
+    max-height: 80vh;
+  }
+  
+  /*Sets the maximum height of the modal body to 90% of the screen height*/
+  .modal-body {
+    max-height: 75vh;
+    overflow: scroll;
+  }
