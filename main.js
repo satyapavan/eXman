@@ -34,6 +34,7 @@ function handleClientLoad() {
  *  listeners.
  */
 function initClient() {
+  console.log("Entering into initClient");
   gapi.client.init({
     apiKey: AA_PP_II_KK_EE_YY,
     clientId: CC_LL_II_EE_NN_TT_II_DD,
@@ -41,6 +42,7 @@ function initClient() {
     scope: SCOPES
   }).then(function () {
     // Listen for sign-in state changes.
+    console.log("initClient -> After init call ");
     gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
 
     // Handle the initial sign-in state.
@@ -50,7 +52,8 @@ function initClient() {
     document.getElementById('btn_total_exp').onclick = handleBalanceClick;
 
   }, function(error) {
-    appendPre(JSON.stringify(error, null, 2));
+    console.log("initClient -> Login Error ");
+    console.log(JSON.stringify(error, null, 2));
   });
 }
 
@@ -298,9 +301,9 @@ function drawTxTypeChart() {
           expDetailsTable.draw(expDetailsDataTable, {showRowNumber: true, width: '90%', height: '100%'});
 
         } else {
-          appendPre('No data found.');
+          console.log('No data found.');
         }
       }, function(response) {
-        appendPre('Error: ' + response.result.error.message);
+        console.log('Error: ' + response.result.error.message);
       });
 }
