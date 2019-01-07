@@ -145,7 +145,7 @@ function handleAddExpense() {
 
     gapi.client.sheets.spreadsheets.values.append({
         spreadsheetId: SS_HH_EE_EE_TT_II_DD,
-        range: '2018-12!A2:E',
+        range: deriveLatestSheetName() + '!A2:E',
         insertDataOption: 'INSERT_ROWS',
         valueInputOption: 'USER_ENTERED',
         resource: body
@@ -190,10 +190,6 @@ function handleBalanceClick() {
     console.log("Entered into handleBalanceClick()");
     $('#btn_total_exp').removeClass('active');
     $('#btn_total_exp').animateCss( 'rubberBand' )
-//    $('#expense_details').animateCss( 'zoomOut' );
-//    $('#expense_details').toggle();
- //   $('#expense_details').toggleClass('zoomIn');
-//    $('#tx_type_pie_chart_div').toggleClass('zoomOut');
 }
 
 function paintUserInformation() {
@@ -288,6 +284,8 @@ function drawTxTypeChart() {
     expDetailsDataTable.addColumn('string', 'Category');
     expDetailsDataTable.addColumn('number', 'Index');
 
+    var total_expense = 0;
+
     var range = response.result;
     if (range.values.length > 0) {
       for (i = 0; i < range.values.length; i++) {
@@ -297,6 +295,8 @@ function drawTxTypeChart() {
         var amount = parseInt((row[1]).replace(',', ''));
         var txtype = row[3];
 
+        total_expense = total_expense + amount;
+
         // we are adding 2 because, +1 for header row and another +1 as current array is begining from 0
         expDetailsDataTable.addRow([row[0], amount, row[2], row[3], row[4], i + 2]);
       }
@@ -304,7 +304,7 @@ function drawTxTypeChart() {
       var chartDataTable = google.visualization.data.group(expDetailsDataTable, [4],
         [{ 'column': 1, 'aggregation': google.visualization.data.sum, 'type': 'number' }]);
 
-      document.getElementById('btn_total_exp').innerHTML = '<i class="fas fa-rupee-sign"></i> ' + 'TODO';
+      document.getElementById('btn_total_exp').innerHTML = '<i class="fas fa-rupee-sign"></i> ' + total_expense;
 
       const chartOptions = {
         chartArea: { width: '100%', height: '85%' },
