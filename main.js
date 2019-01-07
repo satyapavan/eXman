@@ -89,6 +89,30 @@ $.fn.extend({
     },
   });
 
+function formatDate(t_expense_date) {
+  // To modify YYYY-MM-DD format to DD-MON-YYYY format
+  objDate = new Date(Date.parse(t_expense_date));
+
+  var month = new Array();
+  month[0] = "Jan";
+  month[1] = "Feb";
+  month[2] = "Mar";
+  month[3] = "Apr";
+  month[4] = "May";
+  month[5] = "Jun";
+  month[6] = "Jul";
+  month[7] = "Aug";
+  month[8] = "Sep";
+  month[9] = "Oct";
+  month[10] = "Nov";
+  month[11] = "Dec";
+
+  const temp = objDate.getDate() + "-" + month[objDate.getMonth()] + "-" + objDate.getFullYear();
+
+  console.log("Input:" + t_expense_date + " :: Output:" + temp);
+  return temp;
+}
+
 function handleAddExpense() {
     console.log("Entered into handleAddExpense()");
 
@@ -111,50 +135,52 @@ function handleAddExpense() {
     $(".modal-body select").val("");
     $('#add_expense_Modal').modal('hide');
 
-    // To modify YYYY-MM-DD format to DD-MON-YYYY format
-    objDate = new Date( Date.parse(t_expense_date));
 
-    var month = new Array();
-    month[0] = "Jan";
-    month[1] = "Feb";
-    month[2] = "Mar";
-    month[3] = "Apr";
-    month[4] = "May";
-    month[5] = "Jun";
-    month[6] = "Jul";
-    month[7] = "Aug";
-    month[8] = "Sep";
-    month[9] = "Oct";
-    month[10] = "Nov";
-    month[11] = "Dec";
+    inserOrUpdateCells(formatDate(t_expense_date), 
+    t_expense_amount, t_expense_vendor, t_expense_tx_type, t_expense_category, -1);
+}
 
-    console.log(objDate, objDate.toString());
-    
-      var values = [
-        [
-            objDate.getDate() + "-" + month[objDate.getMonth()] + "-" + objDate.getFullYear(), 
-            
-            t_expense_amount, t_expense_vendor, t_expense_tx_type, t_expense_category
-        ]
-      ];
-      var body = {
-        values: values
-      };
-      
-      console.log(values);
+function inserOrUpdateCells(t_expense_date, t_expense_amount, t_expense_vendor, t_expense_tx_type, t_expense_category, index) {
 
+  console.log(t_expense_date, t_expense_amount, t_expense_vendor, t_expense_tx_type, t_expense_category, index);
+
+  var values = [
+    [
+      t_expense_date,
+      t_expense_amount, t_expense_vendor, t_expense_tx_type, t_expense_category
+    ]
+  ];
+  var body = {
+    values: values
+  };
+
+  console.log(values);
+
+  if(index == -1 ) {
     gapi.client.sheets.spreadsheets.values.append({
-        spreadsheetId: SS_HH_EE_EE_TT_II_DD,
-        range: deriveLatestSheetName() + '!A2:E',
-        insertDataOption: 'INSERT_ROWS',
-        valueInputOption: 'USER_ENTERED',
-        resource: body
-      } ).then(function(response) {
-        console.log("sheets.append->", response.result);
-      }, function(reason) {
-        console.error('error: ' + reason.result.error.message);
-      });
-
+      spreadsheetId: SS_HH_EE_EE_TT_II_DD,
+      range: deriveLatestSheetName() + '!A2:E',
+      insertDataOption: 'INSERT_ROWS',
+      valueInputOption: 'USER_ENTERED',
+      resource: body
+    }).then(function (response) {
+      console.log("sheets.append->", response.result);
+    }, function (reason) {
+      console.error('error: ' + reason.result.error.message);
+    });
+  } else {
+    gapi.client.sheets.spreadsheets.values.update({
+      spreadsheetId: SS_HH_EE_EE_TT_II_DD,
+      range: deriveLatestSheetName() + '!A' + index + ':E',
+      valueInputOption: 'USER_ENTERED',
+      includeValuesInResponse: false,
+      resource: body
+    }).then(function (response) {
+      console.log("sheets.update->", response.result);
+    }, function (reason) {
+      console.error('error: ' + reason.result.error.message);
+    });
+  }
 }
 
 
@@ -162,6 +188,12 @@ function initScreen() {
   console.log("Entered into initScreen()");
 
   $('#add_expense_btn').onclick = handleAddExpense;
+
+  // Make our expense details button visible after the user login
+  $('#div_total_exp').toggle();
+
+  // same here too
+  $('#add_expense').toggle();
 
   document.querySelector("#f_expense_date").valueAsDate = new Date();
 
@@ -324,6 +356,28 @@ function drawTxTypeChart() {
       expDetailsDataView.hideColumns([5]); // Hide the cell index using view, but retain the date in table
       expDetailsTable.draw(expDetailsDataView, { showRowNumber: true, width: '90%', height: '100%' });
 
+
+      google.visualization.events.addListener(expDetailsTable, 'select', function() {
+        var row = expDetailsTable.getSelection()[0].row;
+        console.log('You selected ' + expDetailsDataTable.getValue(row, 0));
+        console.log('You selected ' + expDetailsDataTable.getValue(row, 1));
+        console.log('You selected ' + expDetailsDataTable.getValue(row, 2));
+        console.log('You selected ' + expDetailsDataTable.getValue(row, 3));
+        console.log('You selected ' + expDetailsDataTable.getValue(row, 4));
+        console.log('You selected ' + expDetailsDataTable.getValue(row, 5));
+
+        inserOrUpdateCells(
+          expDetailsDataTable.getValue(row, 0),
+          expDetailsDataTable.getValue(row, 1),
+          expDetailsDataTable.getValue(row, 2),
+          expDetailsDataTable.getValue(row, 3),
+          expDetailsDataTable.getValue(row, 4),
+          expDetailsDataTable.getValue(row, 5)
+        );
+
+      });
+
+      
     } else {
       console.log('No data found.');
     }
