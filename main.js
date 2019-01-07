@@ -35,6 +35,7 @@ function handleClientLoad() {
  */
 function initClient() {
   console.log("Entering into initClient");
+
   gapi.client.init({
     apiKey: AA_PP_II_KK_EE_YY,
     clientId: CC_LL_II_EE_NN_TT_II_DD,
@@ -158,7 +159,7 @@ function initScreen() {
 
   $('#add_expense_btn').onclick = handleAddExpense;
 
-//   document.querySelector("#f_expense_date").valueAsDate = new Date();
+  document.querySelector("#f_expense_date").valueAsDate = new Date();
 }
 
 function handleBalanceClick() {
@@ -210,7 +211,8 @@ function surveyScreenDimensions() {
  *  appropriately. After a sign-in, the API is called.
  */
 function updateSigninStatus(isSignedIn) {
-  
+  console.log("Entering into updateSigninStatus ->", isSignedIn);
+
   if (isSignedIn) {
     signinButton.style.display = 'none';
     signoutButton.style.display = 'block';
@@ -228,6 +230,7 @@ function updateSigninStatus(isSignedIn) {
  *  Sign in the user upon button click.
  */
 function handleAuthClick(event) {
+  console.log("Entering into handleAuthClick");
   gapi.auth2.getAuthInstance().signIn();
 }
 
@@ -235,6 +238,7 @@ function handleAuthClick(event) {
  *  Sign out the user upon button click.
  */
 function handleSignoutClick(event) {
+  console.log("Entering into handleSignoutClick");
   gapi.auth2.getAuthInstance().signOut();
 }
 
