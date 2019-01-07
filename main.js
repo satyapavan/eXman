@@ -26,6 +26,7 @@ var signoutButton = document.getElementById('signout_button');
  *  On load, called to load the auth2 library and API client library.
  */
 function handleClientLoad() {
+  console.log("Entering into handleClientLoad");
   gapi.load('client:auth2', initClient);
 }
 
