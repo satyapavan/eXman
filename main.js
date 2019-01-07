@@ -266,72 +266,68 @@ function handleSignoutClick(event) {
   gapi.auth2.getAuthInstance().signOut();
 }
 
+function deriveLatestSheetName() {
+  const objDate = new Date();
+
+  // +1 because javascript is yuck ;-)
+  const temp = objDate.getFullYear() + "-" + ('0' + String(parseInt(objDate.getMonth()) + 1) ).slice() ;
+
+  return temp;
+}
+
 function drawTxTypeChart() {
-    gapi.client.sheets.spreadsheets.values.get({
-      spreadsheetId: SS_HH_EE_EE_TT_II_DD,
-      range: '2018-12!A2:E',
-    }).then(function(response) {
-  
-      var mapTxPivot = new Map([]);
-  
-      var expDetailsDataTable = new google.visualization.DataTable();
-      expDetailsDataTable.addColumn('string', 'Date');
-      expDetailsDataTable.addColumn('number', 'Amount');
-      expDetailsDataTable.addColumn('string', 'Vendor');
-      expDetailsDataTable.addColumn('string', 'Tx Type');
-      expDetailsDataTable.addColumn('string', 'Category');
+  gapi.client.sheets.spreadsheets.values.get({
+    spreadsheetId: SS_HH_EE_EE_TT_II_DD,
+    range: deriveLatestSheetName() + '!A2:E',
+  }).then(function (response) {
+    var expDetailsDataTable = new google.visualization.DataTable();
+    expDetailsDataTable.addColumn('string', 'Date');
+    expDetailsDataTable.addColumn('number', 'Amount');
+    expDetailsDataTable.addColumn('string', 'Vendor');
+    expDetailsDataTable.addColumn('string', 'Tx Type');
+    expDetailsDataTable.addColumn('string', 'Category');
+    expDetailsDataTable.addColumn('number', 'Index');
 
-      var range = response.result;
-      if (range.values.length > 0) {
-        for (i = 0; i < range.values.length; i++) {
-          var row = range.values[i];
-          // Print columns A and E, which correspond to indices 0 and 4.
-            
-          var amount = parseInt((row[1]).replace(',', ''));
-          var txtype = row[3];
+    var range = response.result;
+    if (range.values.length > 0) {
+      for (i = 0; i < range.values.length; i++) {
+        var row = range.values[i];
+        // Print columns A and E, which correspond to indices 0 and 4.
 
-          expDetailsDataTable.addRow([row[0], amount, row[2], row[3], row[4]]);
+        var amount = parseInt((row[1]).replace(',', ''));
+        var txtype = row[3];
 
-          if(mapTxPivot.has(txtype)) {
-            var current_amount = mapTxPivot.get(txtype);
-            mapTxPivot.set(txtype, current_amount + amount)
-          } else {
-            mapTxPivot.set(txtype, amount)
-          }
-        }
-  
-        var chartDataTable = new google.visualization.DataTable();
-          // Declare columns
-          chartDataTable.addColumn('string', 'Tx Type');
-          chartDataTable.addColumn('number', 'Expense');
-          
-          var total_exp = 0;
+        // we are adding 2 because, +1 for header row and another +1 as current array is begining from 0
+        expDetailsDataTable.addRow([row[0], amount, row[2], row[3], row[4], i + 2]);
+      }
 
-        mapTxPivot.forEach(function(value, key) {
-          // getting all the keys of the map  
-          console.log(key, mapTxPivot.get(key));
-          chartDataTable.addRow([key, mapTxPivot.get(key)]);
-          total_exp = total_exp + Number(mapTxPivot.get(key));
-        });
+      var chartDataTable = google.visualization.data.group(expDetailsDataTable, [4],
+        [{ 'column': 1, 'aggregation': google.visualization.data.sum, 'type': 'number' }]);
 
-        document.getElementById('btn_total_exp').innerHTML = '<i class="fas fa-rupee-sign"></i> ' + total_exp ;
-        
-        const chartOptions = {
-          chartArea: {width: '100%', height: '85%' },
-          pieHole: 0.4,
-          legend: {position: 'bottom', alignment: 'center'},
-          reverseCategories: true
-        };
-          var chart = new google.visualization.PieChart(document.getElementById('tx_type_pie_chart_div'));
-          chart.draw(chartDataTable, chartOptions);
-  
-          var expDetailsTable = new google.visualization.Table(document.getElementById('expense_details'));
-          expDetailsTable.draw(expDetailsDataTable, {showRowNumber: true, width: '90%', height: '100%'});
+      document.getElementById('btn_total_exp').innerHTML = '<i class="fas fa-rupee-sign"></i> ' + 'TODO';
 
-        } else {
-          console.log('No data found.');
-        }
-      }, function(response) {
-        console.log('Error: ' + response.result.error.message);
-      });
+      const chartOptions = {
+        chartArea: { width: '100%', height: '85%' },
+        pieHole: 0.4,
+        legend: { position: 'bottom', alignment: 'center' },
+        reverseCategories: true
+      };
+
+      ///////////////////////////////////////////////////////////////////////////////////////////
+      var chart = new google.visualization.PieChart(document.getElementById('tx_type_pie_chart_div'));
+      chart.draw(chartDataTable, chartOptions);
+      
+      ///////////////////////////////////////////////////////////////////////////////////////////
+      var expDetailsTable = new google.visualization.Table(document.getElementById('expense_details'));
+
+      var expDetailsDataView = new google.visualization.DataView(expDetailsDataTable);
+      expDetailsDataView.hideColumns([5]); // Hide the cell index using view, but retain the date in table
+      expDetailsTable.draw(expDetailsDataView, { showRowNumber: true, width: '90%', height: '100%' });
+
+    } else {
+      console.log('No data found.');
+    }
+  }, function (response) {
+    console.log('Error: ' + response.result.error.message);
+  });
 }
