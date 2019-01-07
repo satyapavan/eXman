@@ -2,6 +2,9 @@ const CC_LL_II_EE_NN_TT_II_DD = '505396211486-7rr7ipgf9l86ai9q2vdaum7mnpsb49ih';
 const AA_PP_II_KK_EE_YY = 'AIzaSyA7ILQmN8Z2c4bIxLw-UQcKAqVLw3RIoWc';
 const SS_HH_EE_EE_TT_II_DD = '1DueNTkz7YAAWurv--t0hTmeEOtFxJOUUqPUEHCSZz24';
 
+const ARRAY_TX_TYPE = [ 'Cash', 'Credit Card', 'ICICI', 'PayTm', 'Sodexo'];
+const ARRAY_TX_CATEGORY = ['Transportation', 'Health', 'Eating Out'];
+
 // Array of API discovery doc URLs for APIs used by the quickstart
 const DISCOVERY_DOCS = ["https://sheets.googleapis.com/$discovery/rest?version=v4",
                       "https://people.googleapis.com/$discovery/rest?version=v1"];
@@ -99,8 +102,8 @@ function handleAddExpense() {
     const t_expense_date=document.getElementById('f_expense_date').value;
     const t_expense_amount=document.getElementById('f_expense_amount').value;
     const t_expense_vendor=document.getElementById('f_expense_vendor').value;
-    const t_expense_tx_type=document.getElementById('f_expense_tx_type').value;
-    const t_expense_category=document.getElementById('f_expense_category').value;
+    const t_expense_tx_type=ARRAY_TX_TYPE[document.getElementById('f_expense_tx_type').value];
+    const t_expense_category=ARRAY_TX_CATEGORY[document.getElementById('f_expense_category').value];
     
     // Perform data validation
 
@@ -161,6 +164,26 @@ function initScreen() {
   $('#add_expense_btn').onclick = handleAddExpense;
 
   document.querySelector("#f_expense_date").valueAsDate = new Date();
+
+  var varSelect = document.querySelector("#f_expense_tx_type");
+
+  ARRAY_TX_TYPE.forEach(function(value, index) {
+    var option = document.createElement("option");
+    option.text = value;
+    option.value = index;
+    varSelect.add(option); 
+  });
+
+  varSelect = document.querySelector("#f_expense_category");
+
+  ARRAY_TX_CATEGORY.forEach(function(value, index) {
+    var option = document.createElement("option");
+    option.text = value;
+    option.value = index;
+    varSelect.add(option); 
+  });
+  
+  
 }
 
 function handleBalanceClick() {
