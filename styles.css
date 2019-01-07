@@ -19,7 +19,7 @@
 }
 
 #add_expense {
-    position: absolute;
+    position: fixed;
     bottom: 15%;
     right: 10%;
     height: 30px;
