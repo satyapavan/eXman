@@ -17,7 +17,8 @@
     width: 95%;
     font-weight: bold;
     color: white;
-    font-family: 'Caveat', cursive;
+    /* font-family: 'Caveat', cursive; */
+    font-size: large;
 
     /* This is to make it stick on the top rather than start scrolling out of screen*/
     position: -webkit-sticky;
