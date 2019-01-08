@@ -220,8 +220,6 @@ function initScreen() {
 
 function handleBalanceClick() {
     console.log("Entered into handleBalanceClick()");
-    $('#btn_total_exp').removeClass('active');
-    $('#btn_total_exp').animateCss( 'rubberBand' )
 }
 
 function paintUserInformation() {
