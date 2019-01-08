@@ -25,6 +25,17 @@ function formatDate(t_expense_date) {
   return temp;
 }
 
+function resetModalData() {
+    console.log("Entered into resetModalData");
+
+    document.getElementById('f_expense_date').valueAsDate = new Date();
+    document.getElementById('f_expense_amount').value = "";
+    document.getElementById('f_expense_vendor').value = "";
+    document.getElementById('f_expense_tx_type').value = 0;
+    document.getElementById('f_expense_category').value = -1;
+    document.getElementById('f_expense_append_or_update').value = '-1';
+}
+
 function handleExpenseForm() {
     console.log("Entered into handleExpenseForm()");
 
@@ -44,8 +55,6 @@ function handleExpenseForm() {
 
     // Perform data validation
 
-    $(".modal-body input").val("");
-    $(".modal-body select").val("");
     $('#add_expense_Modal').modal('hide');
 
     inserOrUpdateCells(
@@ -113,10 +122,14 @@ function initScreen() {
   // Make our expense details button visible after the user login
   $('#div_total_exp').show();
 
+  $('#add_expense_Modal').on('hidden.bs.modal', resetModalData);
+
   // same here too
   $('#add_expense').show();
 
-  document.querySelector("#f_expense_date").valueAsDate = new Date();
+  // modal operations
+  $('#add_expense_Modal').on('hide.bs.modal', resetModalData());
+  resetModalData();
 
   var varSelect = document.querySelector("#f_expense_tx_type");
 
@@ -202,8 +215,6 @@ function drawTxTypeChart() {
       for (i = 0; i < range.values.length; i++) {
         var row = range.values[i];
         // Print columns A and E, which correspond to indices 0 and 4.
-
-        console.log(row);
 
         var amount = parseInt((row[1]).replace(',', ''));
         var txtype = row[3];
