@@ -1,13 +1,31 @@
-#signInName, #btn_total_exp {
+#signInName {
     font-weight: bold;
-    color: white;
+    font-size: x-large;
 
+    color: white;
+    font-family: 'Caveat', cursive;
+
+}
+
+/* This is to remove the 'clicked' feeling for the button as its showing the values in other color */
+.btn-warning:hover {
+    background-color: #ffc107;
+    border-color: #ffc107;
 }
 
 #btn_total_exp {
     width: 95%;
+    font-weight: bold;
+    color: white;
+    font-family: 'Caveat', cursive;
 }
 
+sup, sub {
+    font-size: x-large;
+    color: white;
+    font-family: 'Caveat', cursive;
+
+}
 /* this removes the ugly colow of the balance button when clicked. */
 .btn:focus {
     outline: none;
@@ -44,13 +62,16 @@ nav > a {
     color: orange;
 }
 
+.navbar-brand {
+}
+
   /* Sets the maximum height of the entire modal to 95% of the screen height */
-  .modal-content {
+.modal-content {
     max-height: 80vh;
-  }
+}
   
   /*Sets the maximum height of the modal body to 90% of the screen height*/
-  .modal-body {
+.modal-body {
     max-height: 75vh;
     overflow: scroll;
-  }
+}
