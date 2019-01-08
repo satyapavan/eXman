@@ -33,8 +33,6 @@ function initClient() {
     signinButton.onclick = handleAuthClick;
     signoutButton.onclick = handleSignoutClick;
 
-    initScreen();
-
   }, function(error) {
     console.log("initClient -> Login Error ");
     console.log(JSON.stringify(error, null, 2));
@@ -51,6 +49,9 @@ function updateSigninStatus(isSignedIn) {
     if (isSignedIn) {
       signinButton.style.display = 'none';
       signoutButton.style.display = 'block';
+
+      initScreen();
+
     } else {
       signinButton.style.display = 'block';
       signoutButton.style.display = 'none';
