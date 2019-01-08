@@ -232,8 +232,9 @@ function drawTxTypeChart() {
 
       const chartOptions = {
         chartArea: { width: '100%', height: '85%' },
-        pieHole: 0.4,
-        legend: { position: 'bottom', alignment: 'center' },
+        // pieHole: 0.4,
+        is3D: true,
+        legend: { position: 'bottom', alignment: 'center'},
         reverseCategories: true
       };
 
@@ -248,6 +249,7 @@ function drawTxTypeChart() {
       expDetailsDataView.hideColumns([5]); // Hide the cell index using view, but retain the date in table
       expDetailsTable.draw(expDetailsDataView, { showRowNumber: true, width: '90%', height: '100%' });
 
+      /////////////////////////////////////////////////////////////////////////////////////////
 
       google.visualization.events.addListener(expDetailsTable, 'select', function() {
         var row = expDetailsTable.getSelection()[0].row;
