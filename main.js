@@ -1,93 +1,5 @@
-const CC_LL_II_EE_NN_TT_II_DD = '505396211486-7rr7ipgf9l86ai9q2vdaum7mnpsb49ih';
-const AA_PP_II_KK_EE_YY = 'AIzaSyA7ILQmN8Z2c4bIxLw-UQcKAqVLw3RIoWc';
-const SS_HH_EE_EE_TT_II_DD = '1DueNTkz7YAAWurv--t0hTmeEOtFxJOUUqPUEHCSZz24';
-
-const ARRAY_TX_TYPE = [ 'Cash', 'Credit Card', 'ICICI', 'PayTm', 'Sodexo'];
-const ARRAY_TX_CATEGORY = ['Transportation', 'Health', 'Eating Out'];
-
-// Array of API discovery doc URLs for APIs used by the quickstart
-const DISCOVERY_DOCS = ["https://sheets.googleapis.com/$discovery/rest?version=v4",
-                      "https://people.googleapis.com/$discovery/rest?version=v1"];
-
-// Authorization scopes required by the API; multiple scopes can be
-// included, separated by spaces.
-const SCOPES = "profile https://www.googleapis.com/auth/spreadsheets";
-
-// https://www.googleapis.com/auth/drive.file 
-// https://www.googleapis.com/auth/spreadsheets.readonly 
-
-// Client ID and API key from the Developer Console
 // Load the Visualization API and the corechart package.
 google.charts.load('current', {'packages':['corechart', 'table']});
-
-// --------------------------------------------------------------
-
-var signinButton = document.getElementById('signin_button');
-var signoutButton = document.getElementById('signout_button');
-
-/**
- *  On load, called to load the auth2 library and API client library.
- */
-function handleClientLoad() {
-  console.log("Entering into handleClientLoad");
-  gapi.load('client:auth2', initClient);
-}
-
-/**
- *  Initializes the API client library and sets up sign-in state
- *  listeners.
- */
-function initClient() {
-  console.log("Entering into initClient");
-
-  gapi.client.init({
-    apiKey: AA_PP_II_KK_EE_YY,
-    clientId: CC_LL_II_EE_NN_TT_II_DD,
-    discoveryDocs: DISCOVERY_DOCS,
-    scope: SCOPES
-  }).then(function () {
-    // Listen for sign-in state changes.
-    console.log("initClient -> After init call ");
-    gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
-
-    // Handle the initial sign-in state.
-    updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
-    signinButton.onclick = handleAuthClick;
-    signoutButton.onclick = handleSignoutClick;
-    document.getElementById('btn_total_exp').onclick = handleBalanceClick;
-
-  }, function(error) {
-    console.log("initClient -> Login Error ");
-    console.log(JSON.stringify(error, null, 2));
-  });
-}
-
-$.fn.extend({
-    animateCss: function(animationName, callback) {
-      var animationEnd = (function(el) {
-        var animations = {
-          animation: 'animationend',
-          OAnimation: 'oAnimationEnd',
-          MozAnimation: 'mozAnimationEnd',
-          WebkitAnimation: 'webkitAnimationEnd',
-        };
-  
-        for (var t in animations) {
-          if (el.style[t] !== undefined) {
-            return animations[t];
-          }
-        }
-      })(document.createElement('div'));
-  
-      this.addClass('animated ' + animationName).one(animationEnd, function() {
-        $(this).removeClass('animated ' + animationName);
-  
-        if (typeof callback === 'function') callback();
-      });
-  
-      return this;
-    },
-  });
 
 function formatDate(t_expense_date) {
   // To modify YYYY-MM-DD format to DD-MON-YYYY format
@@ -113,31 +25,37 @@ function formatDate(t_expense_date) {
   return temp;
 }
 
-function handleAddExpense() {
-    console.log("Entered into handleAddExpense()");
+function handleExpenseForm() {
+    console.log("Entered into handleExpenseForm()");
 
     console.log(document.getElementById('f_expense_date').value);
     console.log(document.getElementById('f_expense_amount').value);
     console.log(document.getElementById('f_expense_vendor').value);
     console.log(document.getElementById('f_expense_tx_type').value);
-    console.log(document.getElementById('f_expense_category').value);
+    console.log(document.getElementById('f_expense_category').value);    
+    console.log(document.getElementById('f_expense_append_or_update').value);
 
-  
     const t_expense_date=document.getElementById('f_expense_date').value;
     const t_expense_amount=document.getElementById('f_expense_amount').value;
     const t_expense_vendor=document.getElementById('f_expense_vendor').value;
     const t_expense_tx_type=ARRAY_TX_TYPE[document.getElementById('f_expense_tx_type').value];
     const t_expense_category=ARRAY_TX_CATEGORY[document.getElementById('f_expense_category').value];
-    
+    const t_expense_append_or_update=document.getElementById('f_expense_append_or_update').value;
+
     // Perform data validation
 
     $(".modal-body input").val("");
     $(".modal-body select").val("");
     $('#add_expense_Modal').modal('hide');
 
+    inserOrUpdateCells(
+        t_expense_date, 
+        t_expense_amount, t_expense_vendor, 
+        t_expense_tx_type, t_expense_category, 
+        t_expense_append_or_update);
 
-    inserOrUpdateCells(formatDate(t_expense_date), 
-    t_expense_amount, t_expense_vendor, t_expense_tx_type, t_expense_category, -1);
+    // update the screen after each data update with server to make sure our records are accurate
+    // TODO
 }
 
 function inserOrUpdateCells(t_expense_date, t_expense_amount, t_expense_vendor, t_expense_tx_type, t_expense_category, index) {
@@ -183,17 +101,20 @@ function inserOrUpdateCells(t_expense_date, t_expense_amount, t_expense_vendor, 
   }
 }
 
-
 function initScreen() {
   console.log("Entered into initScreen()");
 
-  $('#add_expense_btn').onclick = handleAddExpense;
+  paintUserInformation();
+  surveyScreenDimensions();
+  drawTxTypeChart();
+
+  $('#add_expense_btn').onclick = handleExpenseForm;
 
   // Make our expense details button visible after the user login
-  $('#div_total_exp').toggle();
+  $('#div_total_exp').show();
 
   // same here too
-  $('#add_expense').toggle();
+  $('#add_expense').show();
 
   document.querySelector("#f_expense_date").valueAsDate = new Date();
 
@@ -214,12 +135,6 @@ function initScreen() {
     option.value = index;
     varSelect.add(option); 
   });
-  
-  
-}
-
-function handleBalanceClick() {
-    console.log("Entered into handleBalanceClick()");
 }
 
 function paintUserInformation() {
@@ -256,41 +171,7 @@ function surveyScreenDimensions() {
 	document.getElementById("tx_type_pie_chart_div").style.height =  dimen + 'px';
 
 }
-/**
- *  Called when the signed in status changes, to update the UI
- *  appropriately. After a sign-in, the API is called.
- */
-function updateSigninStatus(isSignedIn) {
-  console.log("Entering into updateSigninStatus ->", isSignedIn);
 
-  if (isSignedIn) {
-    signinButton.style.display = 'none';
-    signoutButton.style.display = 'block';
-    paintUserInformation();
-    surveyScreenDimensions();
-    drawTxTypeChart();
-    initScreen();
-  } else {
-    signinButton.style.display = 'block';
-    signoutButton.style.display = 'none';
-  }
-}
-
-/**
- *  Sign in the user upon button click.
- */
-function handleAuthClick(event) {
-  console.log("Entering into handleAuthClick");
-  gapi.auth2.getAuthInstance().signIn();
-}
-
-/**
- *  Sign out the user upon button click.
- */
-function handleSignoutClick(event) {
-  console.log("Entering into handleSignoutClick");
-  gapi.auth2.getAuthInstance().signOut();
-}
 
 function deriveLatestSheetName() {
   const objDate = new Date();
@@ -321,6 +202,8 @@ function drawTxTypeChart() {
       for (i = 0; i < range.values.length; i++) {
         var row = range.values[i];
         // Print columns A and E, which correspond to indices 0 and 4.
+
+        console.log(row);
 
         var amount = parseInt((row[1]).replace(',', ''));
         var txtype = row[3];
@@ -364,14 +247,16 @@ function drawTxTypeChart() {
         console.log('You selected ' + expDetailsDataTable.getValue(row, 4));
         console.log('You selected ' + expDetailsDataTable.getValue(row, 5));
 
-        inserOrUpdateCells(
-          expDetailsDataTable.getValue(row, 0),
-          expDetailsDataTable.getValue(row, 1),
-          expDetailsDataTable.getValue(row, 2),
-          expDetailsDataTable.getValue(row, 3),
-          expDetailsDataTable.getValue(row, 4),
-          expDetailsDataTable.getValue(row, 5)
-        );
+        console.log(new Date(Date.parse(expDetailsDataTable.getValue(row, 0))));
+
+        document.getElementById('f_expense_date').value = expDetailsDataTable.getValue(row, 0);
+        document.getElementById('f_expense_amount').value = expDetailsDataTable.getValue(row, 1);
+        document.getElementById('f_expense_vendor').value = expDetailsDataTable.getValue(row, 2);
+        document.getElementById('f_expense_tx_type').value = ARRAY_TX_TYPE.indexOf(expDetailsDataTable.getValue(row, 3));
+        document.getElementById('f_expense_category').value = ARRAY_TX_CATEGORY.indexOf(expDetailsDataTable.getValue(row, 4));
+        document.getElementById('f_expense_append_or_update').value = expDetailsDataTable.getValue(row, 5);
+
+        $('#add_expense_Modal').modal('show');
 
       });
 

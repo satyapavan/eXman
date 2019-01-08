@@ -37,7 +37,11 @@
         </nav>
 
     <div>
-      <div id="tx_type_pie_chart_div" class="w-100 mb-2 show collapse multi-collapse"></div>
+      <div id="div_chart_group" class="w-100 mb-2 show collapse multi-collapse">
+        <div id="tx_type_pie_chart_div" class="w-100 mb-2" ></div>
+        <div id="category_pie_chart_div" class="w-100 mb-2" ></div>
+      </div>
+
       <div id="div_total_exp"  style="display: none" >
 
           <button id="btn_total_exp" type="button" 
@@ -49,7 +53,6 @@
           <div id="expense_details" class="collapse multi-collapse" ></div>
 
       </div>
-      <div id="category_pie_chart_div"></div>
 
       <div id="add_expense" data-toggle="modal" data-target="#add_expense_Modal" style="display: none" >
               <i class="fas fa-plus-circle"></i>
@@ -91,11 +94,13 @@
                   <option selected value='-1'>Choose any</option>
                 </select>
           </div>
+          <input type="hidden" id="f_expense_append_or_update" value='-1'>
+          </input>
         </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-        <button id="add_expense_btn" type="button" onclick="handleAddExpense()" class="btn btn-primary">Save</button>
+        <button id="add_expense_btn" type="button" onclick="handleExpenseForm()" class="btn btn-primary">Save</button>
       </div>
     </div>
   </div>
@@ -105,6 +110,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
     
+    <script type="text/javascript" src="metadata.js"></script>
+    <script type="text/javascript" src="g_login_handler.js"></script>
     <script type="text/javascript" src="main.js"></script>
 
     <script async defer src="https://apis.google.com/js/api.js" 
