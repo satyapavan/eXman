@@ -18,6 +18,14 @@
     font-weight: bold;
     color: white;
     font-family: 'Caveat', cursive;
+
+    /* This is to make it stick on the top rather than start scrolling out of screen*/
+    position: -webkit-sticky;
+    position: sticky;
+    top: 5px;
+
+    /* without this the details table is going over this button */
+    z-index: 90;
 }
 
 sup, sub {
