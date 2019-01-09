@@ -258,6 +258,7 @@ function drawTxTypeChart() {
           formatter_date.format(expDetailsDataTable, 0); // as date is in 0th position
           
           var expDetailsDataView = new google.visualization.DataView(expDetailsDataTable);
+          expDetailsDataView.setColumns([0, 1, 2, 4, 3]);
           expDetailsDataView.hideColumns([5]); // Hide the cell index using view, but retain the date in table
 
           expDetailsTable.draw(expDetailsDataView, { showRowNumber: true, width: '90%', height: '100%' });
