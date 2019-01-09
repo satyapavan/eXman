@@ -23,9 +23,13 @@
               <sup>e</sup><img src="145px-Orange_x.svg.png" width="30" height="35" class="d-inline-block align-middle" alt=""><sub>man</sub>
             </a>
 
-              <span id="signInName" class="nav"></span>
-              
-            
+            <form class="form-inline" >
+                 <!-- <span class="nav mx-2 ">Timeline </span> -->
+
+                <select id="id_timeline" type="custom-select form-control" class=" custom-select form-control" style="display: none">
+                </select>
+            </form>    
+
             <form class="form-inline">
               <!--Add buttons to initiate auth sequence and sign out-->
 
@@ -33,15 +37,14 @@
                   <i class="fas fa-sign-in-alt"></i>
               </button>
 
-              <button id="timeline_dropdown" class="btn btn-warning" type="submit" style="display: none">Sign In
-                  <i class="fas fa-sign-in-alt"></i>
-              </button>
-              
+              <span id="span_loading" class="nav">Loading...</span>
+
+              <span id="signInName" class="nav mx-2"></span>
+
               <button id="signout_button" class="btn btn-outline-warning btn-sm" type="submit" style="display: none">
-                  <i class="fas fa-sign-out-alt"></i>
+                <i class="fas fa-sign-out-alt"></i>
               </button>
 
-              <span id="span_loading" class="nav">Loading...</span>
             </form>
         </nav>
 

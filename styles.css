@@ -1,10 +1,26 @@
 #signInName {
     font-weight: bold;
-    font-size: x-large;
+    font-size: large;
 
     color: white;
     font-family: 'Caveat', cursive;
 
+}
+
+.nav {
+    color: white;
+    font-weight: bold;
+    font-size: x-large;
+
+    font-family: 'Caveat', cursive;
+}
+
+#id_timeline {
+    background-color: #007bff;
+
+    color: white;
+    font-weight: bold;
+    font-size: small;
 }
 
 #span_loading {

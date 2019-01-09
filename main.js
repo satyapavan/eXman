@@ -116,6 +116,7 @@ function initScreen() {
   paintUserInformation();
   surveyScreenDimensions();
   drawTxTypeChart();
+  fetchSheetName();
 
   $('#add_expense_btn').onclick = handleExpenseForm;
 
@@ -185,14 +186,43 @@ function surveyScreenDimensions() {
 
 }
 
+function fetchSheetName() {
+
+  gapi.client.sheets.spreadsheets.get({
+    spreadsheetId: SS_HH_EE_EE_TT_II_DD
+  }).then(function (response) {
+    var sheets = response.result.sheets;
+
+    var varSelect = document.querySelector("#id_timeline");
+
+    if (sheets.length > 0) {
+      for (i = 0; i < sheets.length; i++) {
+        console.log(sheets[i].properties.title);
+
+        var option = document.createElement("option");
+        option.text = sheets[i].properties.title;
+        option.value = sheets[i].properties.title;
+        varSelect.add(option);
+      }
+    }
+  });
+  document.getElementById('id_timeline').addEventListener("change", drawTxTypeChart);
+  $('#id_timeline').show();
+}
 
 function deriveLatestSheetName() {
-  const objDate = new Date();
+  let sheet_name = document.getElementById('id_timeline').value;
 
-  // +1 because javascript is yuck ;-)
-  const temp = objDate.getFullYear() + "-" + ('0' + String(parseInt(objDate.getMonth()) + 1) ).slice(-2) ;
+  if( sheet_name == null || sheet_name === "" ) {
+    const objDate = new Date();
+    // +1 because javascript is yuck ;-)
+    sheet_name = objDate.getFullYear() + "-" + ('0' + String(parseInt(objDate.getMonth()) + 1) ).slice(-2) ;
+  }
 
-  return temp;
+  console.log("[" + sheet_name + "]");
+
+  return sheet_name;
+
 }
 
 function drawTxTypeChart() {
