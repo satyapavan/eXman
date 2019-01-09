@@ -201,7 +201,7 @@ function drawTxTypeChart() {
     range: deriveLatestSheetName() + '!A2:E',
   }).then(function (response) {
     var expDetailsDataTable = new google.visualization.DataTable();
-    expDetailsDataTable.addColumn('string', 'Date');
+    expDetailsDataTable.addColumn('date', 'Date');
     expDetailsDataTable.addColumn('number', 'Amount');
     expDetailsDataTable.addColumn('string', 'Vendor');
     expDetailsDataTable.addColumn('string', 'Tx Type');
@@ -222,7 +222,7 @@ function drawTxTypeChart() {
         total_expense = total_expense + amount;
 
         // we are adding 2 because, +1 for header row and another +1 as current array is begining from 0
-        expDetailsDataTable.addRow([row[0], amount, row[2], row[3], row[4], i + 2]);
+        expDetailsDataTable.addRow([new Date(Date.parse(row[0])), amount, row[2], row[3], row[4], i + 2]);
       }
 
       var chartDataTable = google.visualization.data.group(expDetailsDataTable, [4],
@@ -234,8 +234,9 @@ function drawTxTypeChart() {
         chartArea: { width: '100%', height: '85%' },
         // pieHole: 0.4,
         is3D: true,
-        legend: { position: 'bottom', alignment: 'center'},
-        reverseCategories: true
+        legend: { position: 'none', alignment: 'center', maxLines: '2'},
+        reverseCategories: true,
+        pieSliceText: 'label'
       };
 
       ///////////////////////////////////////////////////////////////////////////////////////////
@@ -246,9 +247,8 @@ function drawTxTypeChart() {
       var expDetailsTable = new google.visualization.Table(document.getElementById('expense_details'));
 
       // Important: Formatters can only be used with a DataTable; they cannot be used with a DataView (DataView objects are read-only). 
-      var formatter_date = new google.visualization.DateFormat({pattern: 'dd-MMM'});
-      formatter_date.format(expDetailsDataTable, 0); // at date is in 0th position
-
+      var formatter_date = new google.visualization.DateFormat({pattern: "dd-MMM"});
+      formatter_date.format(expDetailsDataTable, 0); // as date is in 0th position
       
       var expDetailsDataView = new google.visualization.DataView(expDetailsDataTable);
       expDetailsDataView.hideColumns([5]); // Hide the cell index using view, but retain the date in table
@@ -268,7 +268,7 @@ function drawTxTypeChart() {
 
         console.log(new Date(Date.parse(expDetailsDataTable.getValue(row, 0))));
 
-        document.getElementById('f_expense_date').value = expDetailsDataTable.getValue(row, 0);
+        document.getElementById('f_expense_date').valueAsDate = expDetailsDataTable.getValue(row, 0);
         document.getElementById('f_expense_amount').value = expDetailsDataTable.getValue(row, 1);
         document.getElementById('f_expense_vendor').value = expDetailsDataTable.getValue(row, 2);
         document.getElementById('f_expense_tx_type').value = ARRAY_TX_TYPE.indexOf(expDetailsDataTable.getValue(row, 3));

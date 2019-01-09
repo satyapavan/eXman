@@ -22,17 +22,25 @@
               <sup>e</sup><img src="145px-Orange_x.svg.png" width="30" height="35" class="d-inline-block align-middle" alt=""><sub>man</sub>
             </a>
 
-            <span id="signInName" class="nav"></span>
-
+              <span id="signInName" class="nav"></span>
+              
+            
             <form class="form-inline">
-              <button id="signin_button" class="btn btn-warning" type="submit" >Sign In
+              <!--Add buttons to initiate auth sequence and sign out-->
+
+              <button id="signin_button" class="btn btn-warning" type="submit" style="display: none">Sign In
                   <i class="fas fa-sign-in-alt"></i>
               </button>
-                  <!--Add buttons to initiate auth sequence and sign out-->
-              <button id="signout_button" class="btn btn-outline-warning btn-sm" type="submit" style="display: none">Sign Out
-                  <i class="fas fa-sign-out-alt"></i>
+
+              <button id="timeline_dropdown" class="btn btn-warning" type="submit" style="display: none">Sign In
+                  <i class="fas fa-sign-in-alt"></i>
               </button>
               
+              <button id="signout_button" class="btn btn-outline-warning btn-sm" type="submit" style="display: none">
+                  <i class="fas fa-sign-out-alt"></i>
+              </button>
+
+              <span id="span_loading" class="nav">Loading...</span>
             </form>
         </nav>
 

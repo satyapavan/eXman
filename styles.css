@@ -7,6 +7,11 @@
 
 }
 
+#span_loading {
+    color: white;
+    font-weight: bold;
+    font-size: large;
+}
 /* This is to remove the 'clicked' feeling for the button as its showing the values in other color */
 .btn-warning:hover {
     background-color: #ffc107;
