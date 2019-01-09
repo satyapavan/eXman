@@ -190,7 +190,7 @@ function deriveLatestSheetName() {
   const objDate = new Date();
 
   // +1 because javascript is yuck ;-)
-  const temp = objDate.getFullYear() + "-" + ('0' + String(parseInt(objDate.getMonth()) + 1) ).slice() ;
+  const temp = objDate.getFullYear() + "-" + ('0' + String(parseInt(objDate.getMonth()) + 1) ).slice(-2) ;
 
   return temp;
 }
@@ -245,8 +245,14 @@ function drawTxTypeChart() {
       ///////////////////////////////////////////////////////////////////////////////////////////
       var expDetailsTable = new google.visualization.Table(document.getElementById('expense_details'));
 
+      // Important: Formatters can only be used with a DataTable; they cannot be used with a DataView (DataView objects are read-only). 
+      var formatter_date = new google.visualization.DateFormat({pattern: 'dd-MMM'});
+      formatter_date.format(expDetailsDataTable, 0); // at date is in 0th position
+
+      
       var expDetailsDataView = new google.visualization.DataView(expDetailsDataTable);
       expDetailsDataView.hideColumns([5]); // Hide the cell index using view, but retain the date in table
+
       expDetailsTable.draw(expDetailsDataView, { showRowNumber: true, width: '90%', height: '100%' });
 
       /////////////////////////////////////////////////////////////////////////////////////////
