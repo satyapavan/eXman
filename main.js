@@ -225,58 +225,68 @@ function drawTxTypeChart() {
         expDetailsDataTable.addRow([new Date(Date.parse(row[0])), amount, row[2], row[3], row[4], i + 2]);
       }
 
-      var chartDataTable = google.visualization.data.group(expDetailsDataTable, [4],
-        [{ 'column': 1, 'aggregation': google.visualization.data.sum, 'type': 'number' }]);
+      ///////////////////////////////////////////////////////////////////////////////////////////
 
-      document.getElementById('btn_total_exp').innerHTML = '<i class="fas fa-rupee-sign"></i> ' + total_expense;
+      setTimeout(function() {
+          console.log("Started drawing pie chart");
+          var chartDataTable = google.visualization.data.group(expDetailsDataTable, [4],
+            [{ 'column': 1, 'aggregation': google.visualization.data.sum, 'type': 'number' }]);
 
-      const chartOptions = {
-        chartArea: { width: '100%', height: '85%' },
-        // pieHole: 0.4,
-        is3D: true,
-        legend: { position: 'none', alignment: 'center', maxLines: '2'},
-        reverseCategories: true,
-        pieSliceText: 'label'
-      };
+          document.getElementById('btn_total_exp').innerHTML = '<i class="fas fa-rupee-sign"></i> ' + total_expense;
+
+          const chartOptions = {
+            chartArea: { width: '100%', height: '85%' },
+            // pieHole: 0.4,
+            is3D: true,
+            legend: { position: 'none', alignment: 'center', maxLines: '2'},
+            reverseCategories: true,
+            pieSliceText: 'label'
+          };
+
+          var chart = new google.visualization.PieChart(document.getElementById('tx_type_pie_chart_div'));
+          chart.draw(chartDataTable, chartOptions);
+          console.log("Completed drawing pie chart");
+      });
 
       ///////////////////////////////////////////////////////////////////////////////////////////
-      var chart = new google.visualization.PieChart(document.getElementById('tx_type_pie_chart_div'));
-      chart.draw(chartDataTable, chartOptions);
-      
-      ///////////////////////////////////////////////////////////////////////////////////////////
-      var expDetailsTable = new google.visualization.Table(document.getElementById('expense_details'));
+      setTimeout(function() {
+        console.log("Started drawing Table chart");
+          var expDetailsTable = new google.visualization.Table(document.getElementById('expense_details'));
 
-      // Important: Formatters can only be used with a DataTable; they cannot be used with a DataView (DataView objects are read-only). 
-      var formatter_date = new google.visualization.DateFormat({pattern: "dd-MMM"});
-      formatter_date.format(expDetailsDataTable, 0); // as date is in 0th position
-      
-      var expDetailsDataView = new google.visualization.DataView(expDetailsDataTable);
-      expDetailsDataView.hideColumns([5]); // Hide the cell index using view, but retain the date in table
+          // Important: Formatters can only be used with a DataTable; they cannot be used with a DataView (DataView objects are read-only). 
+          var formatter_date = new google.visualization.DateFormat({pattern: "dd-MMM"});
+          formatter_date.format(expDetailsDataTable, 0); // as date is in 0th position
+          
+          var expDetailsDataView = new google.visualization.DataView(expDetailsDataTable);
+          expDetailsDataView.hideColumns([5]); // Hide the cell index using view, but retain the date in table
 
-      expDetailsTable.draw(expDetailsDataView, { showRowNumber: true, width: '90%', height: '100%' });
+          expDetailsTable.draw(expDetailsDataView, { showRowNumber: true, width: '90%', height: '100%' });
 
+          console.log("Completed drawing Table chart");
+     
       /////////////////////////////////////////////////////////////////////////////////////////
 
-      google.visualization.events.addListener(expDetailsTable, 'select', function() {
-        var row = expDetailsTable.getSelection()[0].row;
-        console.log('You selected ' + expDetailsDataTable.getValue(row, 0));
-        console.log('You selected ' + expDetailsDataTable.getValue(row, 1));
-        console.log('You selected ' + expDetailsDataTable.getValue(row, 2));
-        console.log('You selected ' + expDetailsDataTable.getValue(row, 3));
-        console.log('You selected ' + expDetailsDataTable.getValue(row, 4));
-        console.log('You selected ' + expDetailsDataTable.getValue(row, 5));
+          google.visualization.events.addListener(expDetailsTable, 'select', function() {
+            var row = expDetailsTable.getSelection()[0].row;
+            console.log('You selected ' + expDetailsDataTable.getValue(row, 0));
+            console.log('You selected ' + expDetailsDataTable.getValue(row, 1));
+            console.log('You selected ' + expDetailsDataTable.getValue(row, 2));
+            console.log('You selected ' + expDetailsDataTable.getValue(row, 3));
+            console.log('You selected ' + expDetailsDataTable.getValue(row, 4));
+            console.log('You selected ' + expDetailsDataTable.getValue(row, 5));
 
-        console.log(new Date(Date.parse(expDetailsDataTable.getValue(row, 0))));
+            console.log(new Date(Date.parse(expDetailsDataTable.getValue(row, 0))));
 
-        document.getElementById('f_expense_date').valueAsDate = expDetailsDataTable.getValue(row, 0);
-        document.getElementById('f_expense_amount').value = expDetailsDataTable.getValue(row, 1);
-        document.getElementById('f_expense_vendor').value = expDetailsDataTable.getValue(row, 2);
-        document.getElementById('f_expense_tx_type').value = ARRAY_TX_TYPE.indexOf(expDetailsDataTable.getValue(row, 3));
-        document.getElementById('f_expense_category').value = ARRAY_TX_CATEGORY.indexOf(expDetailsDataTable.getValue(row, 4));
-        document.getElementById('f_expense_append_or_update').value = expDetailsDataTable.getValue(row, 5);
+            document.getElementById('f_expense_date').valueAsDate = expDetailsDataTable.getValue(row, 0);
+            document.getElementById('f_expense_amount').value = expDetailsDataTable.getValue(row, 1);
+            document.getElementById('f_expense_vendor').value = expDetailsDataTable.getValue(row, 2);
+            document.getElementById('f_expense_tx_type').value = ARRAY_TX_TYPE.indexOf(expDetailsDataTable.getValue(row, 3));
+            document.getElementById('f_expense_category').value = ARRAY_TX_CATEGORY.indexOf(expDetailsDataTable.getValue(row, 4));
+            document.getElementById('f_expense_append_or_update').value = expDetailsDataTable.getValue(row, 5);
 
-        $('#add_expense_Modal').modal('show');
+            $('#add_expense_Modal').modal('show');
 
+        });
       });
 
       
