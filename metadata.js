@@ -5,7 +5,7 @@ const SS_HH_EE_EE_TT_II_DD = '1I9xBLU7LZ3ZRO6pe0DdtUGgvgNrBF3sRPxbOVQiSFpE';
 // 1DueNTkz7YAAWurv--t0hTmeEOtFxJOUUqPUEHCSZz24
 
 const ARRAY_TX_TYPE = [ 'Cash', 'Credit Card', 'ICICI', 'PayTm', 'Sodexo'];
-const ARRAY_TX_CATEGORY = ['Daily Needs', 'Transport', 'Home Maintainance', 'Health', 'Eating Out', 'Entertainment', 'Clothing', 'Others'];
+const ARRAY_TX_CATEGORY = ['Daily Needs', 'Transport', 'Home Maintainance', 'Health', 'Eating Out', 'Entertainment', 'Clothing', 'Office', 'Others'];
 
 // Array of API discovery doc URLs for APIs used by the quickstart
 const DISCOVERY_DOCS = ["https://sheets.googleapis.com/$discovery/rest?version=v4",
