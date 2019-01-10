@@ -319,7 +319,14 @@ function drawTxTypeChart() {
           // Important: Formatters can only be used with a DataTable; they cannot be used with a DataView (DataView objects are read-only). 
           var formatter_date = new google.visualization.DateFormat({pattern: "dd-MMM"});
           formatter_date.format(expDetailsDataTable, 0); // as date is in 0th position
-          
+
+          // special formatters to signify higher amount transactions
+          var formatter = new google.visualization.ColorFormat();
+                            // from, to, color, bgcolor
+          formatter.addRange(500, 1000, '#856404', '#fff3cd;');
+          formatter.addRange(1000, null, '#721c24', '#f8d7da');
+          formatter.format(expDetailsDataTable, 1); // Apply formatter to second column which is amount/rupees
+
           var expDetailsDataView = new google.visualization.DataView(expDetailsDataTable);
           expDetailsDataView.setColumns([0, 1, 2, 4, 3]);
           expDetailsDataView.hideColumns([5]); // Hide the cell index using view, but retain the date in table
