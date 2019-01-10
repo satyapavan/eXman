@@ -217,8 +217,6 @@ function fetchSheetName() {
 
     if (sheets.length > 0) {
       for (i = 0; i < sheets.length; i++) {
-        console.log(sheets[i].properties.title);
-
         var option = document.createElement("option");
         option.text = (sheets[i].properties.title).substr(0, 4) + ", " + MONTH_NUM_TO_MMM[parseInt((sheets[i].properties.title).substr(-2)) - 1] ;
         option.value = sheets[i].properties.title;
@@ -274,7 +272,6 @@ function drawTxTypeChart() {
 
         const category = (row[4] != undefined) ? row[4] : "Others" ;
 
-        console.log( TX_CATEGORY_ICONS[ARRAY_TX_CATEGORY.indexOf(row[5])]);
         // we are adding 2 because, +1 for header row and another +1 as current array is begining from 0
         expDetailsDataTable.addRow([new Date(Date.parse(row[0])), amount, row[2], row[3], category, i + 2, 
           TX_CATEGORY_ICONS[ARRAY_TX_CATEGORY.indexOf(category)]]);
