@@ -5,21 +5,7 @@ function formatDate(t_expense_date) {
   // To modify YYYY-MM-DD format to DD-MON-YYYY format
   objDate = new Date(Date.parse(t_expense_date));
 
-  var month = new Array();
-  month[0] = "Jan";
-  month[1] = "Feb";
-  month[2] = "Mar";
-  month[3] = "Apr";
-  month[4] = "May";
-  month[5] = "Jun";
-  month[6] = "Jul";
-  month[7] = "Aug";
-  month[8] = "Sep";
-  month[9] = "Oct";
-  month[10] = "Nov";
-  month[11] = "Dec";
-
-  const temp = objDate.getDate() + "-" + month[objDate.getMonth()] + "-" + objDate.getFullYear();
+  const temp = objDate.getDate() + "-" + MONTH_NUM_TO_MMM[objDate.getMonth()] + "-" + objDate.getFullYear();
 
   console.log("Input:" + t_expense_date + " :: Output:" + temp);
   return temp;
@@ -146,10 +132,10 @@ function handleTxAlert(status, message) {
 function initScreen() {
   console.log("Entered into initScreen()");
 
-  paintUserInformation();
   surveyScreenDimensions();
   drawTxTypeChart();
   fetchSheetName();
+  paintUserInformation();
 
   $('#add_expense_btn').onclick = handleExpenseForm;
 
@@ -227,20 +213,20 @@ function fetchSheetName() {
     var sheets = response.result.sheets;
 
     var varSelect = document.querySelector("#id_timeline");
+    $('#id_timeline').show();
 
     if (sheets.length > 0) {
       for (i = 0; i < sheets.length; i++) {
         console.log(sheets[i].properties.title);
 
         var option = document.createElement("option");
-        option.text = sheets[i].properties.title;
+        option.text = (sheets[i].properties.title).substr(0, 4) + ", " + MONTH_NUM_TO_MMM[parseInt((sheets[i].properties.title).substr(-2)) - 1] ;
         option.value = sheets[i].properties.title;
         varSelect.add(option);
       }
     }
   });
   document.getElementById('id_timeline').addEventListener("change", drawTxTypeChart);
-  $('#id_timeline').show();
 }
 
 function deriveLatestSheetName() {

@@ -7,6 +7,8 @@ const SS_HH_EE_EE_TT_II_DD = '1I9xBLU7LZ3ZRO6pe0DdtUGgvgNrBF3sRPxbOVQiSFpE';
 const ARRAY_TX_TYPE = [ 'Cash', 'Credit Card', 'ICICI', 'PayTm', 'Sodexo'];
 const ARRAY_TX_CATEGORY = ['Daily Needs', 'Transport', 'Home Maintainance', 'Health', 'Eating Out', 'Entertainment', 'Clothing', 'Office', 'Others'];
 
+const MONTH_NUM_TO_MMM = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
 // Array of API discovery doc URLs for APIs used by the quickstart
 const DISCOVERY_DOCS = ["https://sheets.googleapis.com/$discovery/rest?version=v4",
                       "https://people.googleapis.com/$discovery/rest?version=v1"];
