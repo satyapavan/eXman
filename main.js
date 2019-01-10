@@ -254,8 +254,10 @@ function drawTxTypeChart() {
     expDetailsDataTable.addColumn('number', 'Rs.');
     expDetailsDataTable.addColumn('string', 'Vendor');
     expDetailsDataTable.addColumn('string', 'Tx Type');
-    expDetailsDataTable.addColumn('string', 'Category');
+    expDetailsDataTable.addColumn('string', 'Category'); // Actual Category
     expDetailsDataTable.addColumn('number', 'Index');
+    expDetailsDataTable.addColumn('string', 'Type'); // Icon for the actual Category
+
 
     var total_expense = 0;
 
@@ -270,8 +272,12 @@ function drawTxTypeChart() {
 
         total_expense = total_expense + amount;
 
+        const category = (row[4] != undefined) ? row[4] : "Others" ;
+
+        console.log( TX_CATEGORY_ICONS[ARRAY_TX_CATEGORY.indexOf(row[5])]);
         // we are adding 2 because, +1 for header row and another +1 as current array is begining from 0
-        expDetailsDataTable.addRow([new Date(Date.parse(row[0])), amount, row[2], row[3], row[4], i + 2]);
+        expDetailsDataTable.addRow([new Date(Date.parse(row[0])), amount, row[2], row[3], category, i + 2, 
+          TX_CATEGORY_ICONS[ARRAY_TX_CATEGORY.indexOf(category)]]);
       }
 
       ///////////////////////////////////////////////////////////////////////////////////////////
@@ -314,7 +320,7 @@ function drawTxTypeChart() {
           formatter.format(expDetailsDataTable, 1); // Apply formatter to second column which is amount/rupees
 
           var expDetailsDataView = new google.visualization.DataView(expDetailsDataTable);
-          expDetailsDataView.setColumns([0, 1, 2, 4, 3]);
+          expDetailsDataView.setColumns([0, 1, 6, 2, 3]);
           expDetailsDataView.hideColumns([5]); // Hide the cell index using view, but retain the date in table
 
           expDetailsTable.draw(expDetailsDataView, { 

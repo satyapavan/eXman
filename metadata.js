@@ -6,8 +6,20 @@ const SS_HH_EE_EE_TT_II_DD = '1I9xBLU7LZ3ZRO6pe0DdtUGgvgNrBF3sRPxbOVQiSFpE';
 
 const ARRAY_TX_TYPE = [ 'Cash', 'Credit Card', 'ICICI', 'PayTm', 'Sodexo'];
 const ARRAY_TX_CATEGORY = ['Daily Needs', 'Transport', 'Home Maintainance', 'Health', 'Eating Out', 'Entertainment', 'Clothing', 'Office', 'Others'];
-
 const MONTH_NUM_TO_MMM = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+const TX_CATEGORY_ICONS = [
+    '<i class="icon-tx-category mx-1 my-1 icon-daily-needs fas fa-utensils"></i>'   , // Daily Needs
+    '<i class="icon-tx-category mx-1 my-1 icon-transport fas fa-car"></i>'        , // Transport
+    '<i class="icon-tx-category mx-1 my-1 icon-home-maintainance fas fa-home"></i>'       , // Home Maintainance
+    '<i class="icon-tx-category mx-1 my-1 icon-health fas fa-heartbeat"></i>'  , // Health
+    '<i class="icon-tx-category mx-1 my-1 icon-eating-out fas fa-cocktail"></i>'   , // Eating out
+    '<i class="icon-tx-category mx-1 my-1 icon-entertainment fas fa-theater-masks"></i>'  , // Entertainment
+    '<i class="icon-tx-category mx-1 my-1 icon-clothing fas fa-tshirt"></i>'     , // Clothing
+    '<i class="icon-tx-category mx-1 my-1 icon-office fas fa-briefcase"></i>'  , // Office
+    '<i class="icon-tx-category mx-1 my-1 icon-others fas fa-usd-circle"></i>'   // Others
+];
+
 
 // Array of API discovery doc URLs for APIs used by the quickstart
 const DISCOVERY_DOCS = ["https://sheets.googleapis.com/$discovery/rest?version=v4",

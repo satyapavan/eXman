@@ -67,7 +67,7 @@ sup, sub {
     outline: none;
 }
 
-#div_total_exp, #expense_details {
+#div_total_exp, #expense_details, .google-visualization-table-td {
     align-items: center;
     justify-content: center;
 }
@@ -82,7 +82,7 @@ sup, sub {
 
     fill-opacity: 0.4;
 
-    font-size: 40px; 
+    font-size: 40px;
     color: orange;
 }
 
@@ -107,4 +107,36 @@ nav > a {
 .modal-body {
     max-height: 75vh;
     overflow: scroll;
+}
+
+.icon-tx-category {
+    font-size: 20px; 
+}
+
+.icon-daily-needs {
+    color: #6610f2;
+}
+.icon-transport {
+    color: #007bff;
+}
+.icon-home-maintainance {
+    color: #ffc107;
+}
+.icon-health {
+    color: #28a745;
+}
+.icon-eating-out {
+    color: #6f42c1;
+}
+.icon-entertainment {
+    color: #20c997;
+}
+.icon-clothing {
+    color: #e83e8c;
+}
+.icon-office {
+    color: #17a2b8;
+}
+.icon-others {
+    color: #343a40;
 }
