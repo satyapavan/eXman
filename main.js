@@ -265,7 +265,7 @@ function drawTxTypeChart() {
   }).then(function (response) {
     var expDetailsDataTable = new google.visualization.DataTable();
     expDetailsDataTable.addColumn('date', 'Date');
-    expDetailsDataTable.addColumn('number', 'Amount');
+    expDetailsDataTable.addColumn('number', 'Rs.');
     expDetailsDataTable.addColumn('string', 'Vendor');
     expDetailsDataTable.addColumn('string', 'Tx Type');
     expDetailsDataTable.addColumn('string', 'Category');
@@ -298,10 +298,10 @@ function drawTxTypeChart() {
           document.getElementById('btn_total_exp').innerHTML = '<i class="fas fa-rupee-sign"></i> ' + total_expense;
 
           const chartOptions = {
-            chartArea: { width: '100%', height: '85%' },
+            chartArea: { width: '100%', height: '95%' },
             // pieHole: 0.4,
             is3D: true,
-            legend: { position: 'none', alignment: 'center', maxLines: '2'},
+            legend: { position: 'none', alignment: 'center' },
             reverseCategories: true,
             pieSliceText: 'label'
           };
@@ -324,7 +324,14 @@ function drawTxTypeChart() {
           expDetailsDataView.setColumns([0, 1, 2, 4, 3]);
           expDetailsDataView.hideColumns([5]); // Hide the cell index using view, but retain the date in table
 
-          expDetailsTable.draw(expDetailsDataView, { showRowNumber: true, width: '90%', height: '100%' });
+          expDetailsTable.draw(expDetailsDataView, { 
+              // showRowNumber: true, 
+              width: '100%', 
+              height: '100%',
+              allowHtml: true,  
+              sortColumn: 0, // sort based on date. this even helped me find a data bug :)
+              sortAscending: false // show the latest records first
+            });
 
           console.log("Completed drawing Table chart");
      

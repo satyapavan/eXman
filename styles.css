@@ -41,7 +41,7 @@
 }
 
 #btn_total_exp {
-    width: 95%;
+    /* width: 95%; */
     font-weight: bold;
     color: white;
     /* font-family: 'Caveat', cursive; */
@@ -67,7 +67,7 @@ sup, sub {
     outline: none;
 }
 
-#div_total_exp {
+#div_total_exp, #expense_details {
     align-items: center;
     justify-content: center;
 }
@@ -98,10 +98,7 @@ nav > a {
     color: orange;
 }
 
-.navbar-brand {
-}
-
-  /* Sets the maximum height of the entire modal to 95% of the screen height */
+/* Sets the maximum height of the entire modal to 95% of the screen height */
 .modal-content {
     max-height: 80vh;
 }
