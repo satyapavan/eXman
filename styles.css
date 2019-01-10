@@ -15,9 +15,15 @@
     font-family: 'Caveat', cursive;
 }
 
+.tx-alert {
+    position: fixed;
+    top: 65%; 
+    left:15%;
+    width: 65%;
+}
+
 #id_timeline {
     background-color: #007bff;
-
     color: white;
     font-weight: bold;
     font-size: small;

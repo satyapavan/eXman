@@ -8,8 +8,6 @@ var signoutButton = document.getElementById('signout_button');
  */
 function handleClientLoad() {
   console.log("Entering into handleClientLoad");
-  $('#span_loading').hide();
-  $('#signin_button').show();
   gapi.load('client:auth2', initClient);
 }
 
@@ -48,6 +46,8 @@ function initClient() {
 function updateSigninStatus(isSignedIn) {
     console.log("Entering into updateSigninStatus ->", isSignedIn);
   
+    $('#span_loading').hide();
+
     if (isSignedIn) {
       signinButton.style.display = 'none';
       signoutButton.style.display = 'block';

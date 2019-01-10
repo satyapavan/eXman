@@ -92,8 +92,10 @@ function inserOrUpdateCells(t_expense_date, t_expense_amount, t_expense_vendor, 
       resource: body
     }).then(function (response) {
       console.log("sheets.append->", response.result);
+      handleTxAlert("append", "");
     }, function (reason) {
       console.error('error: ' + reason.result.error.message);
+      handleTxAlert("error", reason.result.error.message);
     });
   } else {
     gapi.client.sheets.spreadsheets.values.update({
@@ -104,10 +106,41 @@ function inserOrUpdateCells(t_expense_date, t_expense_amount, t_expense_vendor, 
       resource: body
     }).then(function (response) {
       console.log("sheets.update->", response.result);
+      handleTxAlert("update", "");
     }, function (reason) {
       console.error('error: ' + reason.result.error.message);
+      handleTxAlert("error", reason.result.error.message);
     });
   }
+}
+
+function handleTxAlert(status, message) {
+
+  if (status === "append") {
+    console.log("Entered into " + status);
+    $('#tx-alert-content').html("<strong>Added</strong> <br> transaction successfully");
+    $(".tx-alert").addClass("alert-success");
+    $(".tx-alert").removeClass("alert-primary");
+    $(".tx-alert").removeClass("alert-danger");
+  } else if (status === "update") {
+    console.log("Entered into " + status);
+    $('#tx-alert-content').html("<strong>Updated</strong> <br> transaction successfully");
+    $(".tx-alert").removeClass("alert-success");
+    $(".tx-alert").addClass("alert-primary");
+    $(".tx-alert").removeClass("alert-danger");
+  } else if (status === "error") {
+    console.log("Entered into " + status);
+    $('#tx-alert-content').html("<strong>ERROR!! </strong> <br> " + message);
+    $(".tx-alert").removeClass("alert-success");
+    $(".tx-alert").removeClass("alert-primary");
+    $(".tx-alert").addClass("alert-danger");
+  } else
+    $('#tx-alert-content').html("Thank you for utilizing the services");
+
+  $(".tx-alert").show();
+  setTimeout(function () {
+    $(".tx-alert").hide();
+  }, 3000);
 }
 
 function initScreen() {
