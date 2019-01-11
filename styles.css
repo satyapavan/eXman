@@ -41,7 +41,6 @@
 }
 
 #btn_total_exp {
-    /* width: 95%; */
     font-weight: bold;
     color: white;
     /* font-family: 'Caveat', cursive; */
@@ -145,3 +144,4 @@ nav > a {
 .icon-others {
     color: #343a40;
 }
+
