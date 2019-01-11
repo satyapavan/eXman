@@ -20,6 +20,13 @@ const TX_CATEGORY_ICONS = [
     '<i class="icon-tx-category mx-1 my-1 icon-others fas fa-usd-circle"></i>'   // Others
 ];
 
+const TX_TYPE_ICONS = [
+    '<img src="icon-cash.png" class="icon-tx-type icon-cash">',
+    '<img src="icon-citibank.png" class="icon-tx-type icon-citi">',
+    '<img src="icon-icici.png" class="icon-tx-type icon-icici">',
+    '<img src="icon-paytm.png" class="icon-tx-type icon-paytm">',
+    '<img src="icon-sodexo.png" class="icon-tx-type icon-sodexo">'
+];
 
 // Array of API discovery doc URLs for APIs used by the quickstart
 const DISCOVERY_DOCS = ["https://sheets.googleapis.com/$discovery/rest?version=v4",

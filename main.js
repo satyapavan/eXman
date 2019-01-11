@@ -251,11 +251,11 @@ function drawTxTypeChart() {
     expDetailsDataTable.addColumn('date', 'Date');
     expDetailsDataTable.addColumn('number', 'Rs.');
     expDetailsDataTable.addColumn('string', 'Vendor');
-    expDetailsDataTable.addColumn('string', 'Tx Type');
+    expDetailsDataTable.addColumn('string', 'Tx Type'); // Actual transaction type
     expDetailsDataTable.addColumn('string', 'Category'); // Actual Category
     expDetailsDataTable.addColumn('number', 'Index');
-    expDetailsDataTable.addColumn('string', 'Type'); // Icon for the actual Category
-
+    expDetailsDataTable.addColumn('string', 'Type'); // Icon for the Category
+    expDetailsDataTable.addColumn('string', 'Mode'); // Icon for the tx type
 
     var total_expense = 0;
 
@@ -272,9 +272,11 @@ function drawTxTypeChart() {
 
         const category = (row[4] != undefined) ? row[4] : "Others" ;
 
+        console.log(row[3], TX_TYPE_ICONS[ARRAY_TX_TYPE.indexOf(row[3])]);
         // we are adding 2 because, +1 for header row and another +1 as current array is begining from 0
         expDetailsDataTable.addRow([new Date(Date.parse(row[0])), amount, row[2], row[3], category, i + 2, 
-          TX_CATEGORY_ICONS[ARRAY_TX_CATEGORY.indexOf(category)]]);
+          TX_CATEGORY_ICONS[ARRAY_TX_CATEGORY.indexOf(category)],
+          TX_TYPE_ICONS[ARRAY_TX_TYPE.indexOf(row[3])]]);
       }
 
       ///////////////////////////////////////////////////////////////////////////////////////////
@@ -317,15 +319,15 @@ function drawTxTypeChart() {
           formatter.format(expDetailsDataTable, 1); // Apply formatter to second column which is amount/rupees
 
           var expDetailsDataView = new google.visualization.DataView(expDetailsDataTable);
-          expDetailsDataView.setColumns([0, 1, 6, 2, 3]);
-          expDetailsDataView.hideColumns([5]); // Hide the cell index using view, but retain the date in table
+          expDetailsDataView.setColumns([6, 0, 1, 2, 7]);
+          // expDetailsDataView.hideColumns([5]); // Hide the cell index using view, but retain the date in table
 
           expDetailsTable.draw(expDetailsDataView, { 
               // showRowNumber: true, 
               width: '100%', 
               height: '100%',
               allowHtml: true,  
-              sortColumn: 0, // sort based on date. this even helped me find a data bug :)
+              sortColumn: 1, // sort based on date. this even helped me find a data bug :)
               sortAscending: false // show the latest records first
             });
 

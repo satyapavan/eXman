@@ -113,12 +113,19 @@ nav > a {
     padding-left: 1rem;
 }
 
+.icon-tx-type {
+    width: 25px;
+}
+.icon-sodexo {
+    width: 30px;
+}
+
 .icon-tx-category {
     font-size: 20px; 
 }
 
 .icon-daily-needs {
-    color: #6610f2;
+    color: #e83e8c;
 }
 .icon-transport {
     color: #007bff;
@@ -136,10 +143,10 @@ nav > a {
     color: #20c997;
 }
 .icon-clothing {
-    color: #e83e8c;
+    color: #6610f2;
 }
 .icon-office {
-    color: #17a2b8;
+    color: #6c757d;
 }
 .icon-others {
     color: #343a40;
