@@ -1,152 +1,152 @@
 <!DOCTYPE html>
 <html>
 
-  <head>
-    <link rel="icon" type="image/png" href="eXman_logo.png">
-    <link rel="manifest" href="manifest.json">
+<head>
+  <link rel="icon" type="image/png" href="eXman_logo.png">
+  <link rel="manifest" href="manifest.json">
 
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css?family=Caveat:700" rel="stylesheet">
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <link rel="stylesheet" href="bootstrap.min.css">
 
-    <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/solid.css" integrity="sha384-+0VIRx+yz1WBcCTXBkVQYIBVNEFH1eP6Zknm16roZCyeNg2maWEpk/l/KsyFKs7G" crossorigin="anonymous">  <link rel="stylesheet" href="fontawesome.css">
 
-    <title>eXman</title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  </head>
+  <link href="https://fonts.googleapis.com/css?family=Caveat:700" rel="stylesheet">
 
-  <body>
-      <nav class="navbar navbar-light bg-primary">
+  <link rel="stylesheet" href="styles.css">
 
-          <a class="navbar-brand" href="#">
-              <sup>e</sup><img src="145px-Orange_x.svg.png" width="30" height="35" class="d-inline-block align-middle" alt=""><sub>man</sub>
-            </a>
+  <title>eXman</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
 
-            <form class="form-inline" >
-                 <!-- <span class="nav mx-2 ">Timeline </span> -->
+<body>
+  <nav class="navbar navbar-light bg-primary">
 
-                <select id="id_timeline" type="custom-select form-control" class=" custom-select form-control" style="display: none">
-                </select>
-            </form>    
+    <a class="navbar-brand" href="#">
+      <sup>e</sup><img src="145px-Orange_x.svg.png" width="30" height="35" class="d-inline-block align-middle" alt=""><sub>man</sub>
+    </a>
 
-            <form class="form-inline">
-              <!--Add buttons to initiate auth sequence and sign out-->
+    <form class="form-inline">
+      <!-- <span class="nav mx-2 ">Timeline </span> -->
 
-              <button id="signin_button" class="btn btn-warning" type="submit" style="display: none">Sign In
-                  <i class="fas fa-sign-in-alt"></i>
-              </button>
+      <select id="id_timeline" type="custom-select form-control" class=" custom-select form-control" style="display: none">
+      </select>
+    </form>
 
-              <span id="span_loading" class="nav">Loading...</span>
+    <form class="form-inline">
+      <!--Add buttons to initiate auth sequence and sign out-->
 
-              <span id="signInName" class="nav mx-2"></span>
+      <button id="signin_button" class="btn btn-warning" type="submit" style="display: none">Sign In
+        <i class="fas fa-sign-in-alt"></i>
+      </button>
 
-              <button id="signout_button" class="btn btn-outline-warning btn-sm" type="submit" style="display: none">
-                <i class="fas fa-sign-out-alt"></i>
-              </button>
+      <span id="span_loading" class="nav">Loading...</span>
 
-            </form>
-        </nav>
+      <span id="signInName" class="nav mx-2"></span>
 
-    <div>
-      <div id="div_chart_group" class="w-100 mb-2 show collapse multi-collapse">
-        <div id="tx_type_pie_chart_div" class="w-100 mb-2" ></div>
-        <div id="category_pie_chart_div" class="w-100 mb-2" ></div>
-      </div>
+      <button id="signout_button" class="btn btn-outline-warning btn-sm" type="submit" style="display: none">
+        <i class="fas fa-sign-out-alt"></i>
+      </button>
 
-      <div id="div_total_exp"  style="display: none" >
+    </form>
+  </nav>
 
-          <button id="btn_total_exp" type="button" 
-            class="mx-2 my-2 btn btn-warning btn-block" 
-            data-toggle="collapse" data-target=".multi-collapse" 
-            aria-expanded="false" aria-controls="tx_type_pie_chart_div expense_details">
+  <div>
+    <div id="div_chart_group" class="w-100 mb-2 show collapse multi-collapse">
+      <div id="tx_type_pie_chart_div" class="w-100 mb-2"></div>
+      <div id="category_pie_chart_div" class="w-100 mb-2"></div>
+    </div>
+
+    <div id="div_total_exp" style="display: none">
+
+      <button id="btn_total_exp" type="button" class="mx-2 my-2 btn btn-warning btn-block" data-toggle="collapse"
+        data-target=".multi-collapse" aria-expanded="false" aria-controls="tx_type_pie_chart_div expense_details">
+      </button>
+
+      <div id="expense_details" class="collapse multi-collapse"></div>
+
+    </div>
+
+    <div id="add_expense" data-toggle="modal" data-target="#add_expense_Modal" style="display: none">
+      <i class="fas fa-plus-circle"></i>
+    </div>
+
+  </div>
+
+  <div class="tx-alert alert" style="display: none">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <span id="tx-alert-content"></span>
+  </div>
+
+  <div class="modal fade" id="add_expense_Modal" tabindex="-1" role="dialog" aria-labelledby="add_expense_ModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered role=" document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="add_expense_ModalLabel">Add Expense</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
           </button>
-          
-          <div id="expense_details" class="collapse multi-collapse" ></div>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label for="f_expense_date" class="col-form-label">Date:</label>
+              <input type="date" data-date-format="DD MMMM YYYY" class="form-control" id="f_expense_date" required>
 
-      </div>
+              <label for="f_expense_amount" class="col-form-label">Amount:</label>
+              <input type="number" class="form-control" id="f_expense_amount">
 
-      <div id="add_expense" data-toggle="modal" data-target="#add_expense_Modal" style="display: none" >
-              <i class="fas fa-plus-circle"></i>
-      </div>
+              <label for="f_expense_vendor" class="col-form-label">Description:</label>
+              <input type="text" class="form-control" id="f_expense_vendor">
 
-    </div>
+              <label for="f_expense_tx_type" class="col-form-label">Transaction Type:</label>
+              <select class="custom-select form-control" id="f_expense_tx_type"></select>
 
-    <div class="tx-alert alert" style="display: none">
-      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-      <span id="tx-alert-content"></span>
-    </div>
-
-<div class="modal fade" id="add_expense_Modal" tabindex="-1" role="dialog" aria-labelledby="add_expense_ModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="add_expense_ModalLabel">Add Expense</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form>
-          <div class="form-group">
-            <label for="f_expense_date" class="col-form-label">Date:</label>
-            <input type="date" data-date-format="DD MMMM YYYY" class="form-control" id="f_expense_date" required>
-
-            <label for="f_expense_amount" class="col-form-label">Amount:</label>
-            <input type="number" class="form-control" id="f_expense_amount">
-
-            <label for="f_expense_vendor" class="col-form-label">Description:</label>
-            <input type="text" class="form-control" id="f_expense_vendor">
-
-            <label for="f_expense_tx_type" class="col-form-label">Transaction Type:</label>
-            <select class="custom-select form-control" id="f_expense_tx_type"></select>
-
-            <label for="f_expense_category" class="col-form-label">Category :</label>
-            <select type="custom-select form-control" class="form-control" id="f_expense_category">
+              <label for="f_expense_category" class="col-form-label">Category :</label>
+              <select type="custom-select form-control" class="form-control" id="f_expense_category">
                 <option selected value='-1'>Choose any</option>
-            </select>
+              </select>
 
-            <input type="hidden" id="f_expense_append_or_update" value='-1'></input>
+              <input type="hidden" id="f_expense_append_or_update" value='-1'></input>
 
-          </div>
-          <div class="form-group">
-             
-          </div>
-          <div class="form-group">
+            </div>
+            <div class="form-group">
 
-          </div>
-          <div class="form-group">
+            </div>
+            <div class="form-group">
 
-          </div>
-          <div class="form-group">
+            </div>
+            <div class="form-group">
 
-          </div>
+            </div>
+            <div class="form-group">
 
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-        <button id="add_expense_btn" type="button" onclick="handleExpenseForm()" class="btn btn-primary">Save</button>
+            </div>
+
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button id="add_expense_btn" type="button" onclick="handleExpenseForm()" class="btn btn-primary">Save</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
-    
-    <script type="text/javascript" src="metadata.js"></script>
-    <script type="text/javascript" src="g_login_handler.js"></script>
-    <script type="text/javascript" src="main.js"></script>
-    <script type="text/javascript" src="sw.js"></script>
+  <script type="text/javascript" src="jquery-3.3.1.slim.min.js"></script>
+  <script type="text/javascript" src="popper.min.js"></script>
+  <script type="text/javascript" src="bootstrap.min.js"></script>
+
+  <script type="text/javascript" src="metadata.js"></script>
+  <script type="text/javascript" src="g_login_handler.js"></script>
+  <script type="text/javascript" src="main.js"></script>
+  <script type="text/javascript" src="sw.js"></script>
 
 
-    <script async defer src="https://apis.google.com/js/api.js" 
-      onload="this.onload=function(){};handleClientLoad()"
-      onreadystatechange="if (this.readyState === 'complete') this.onload()">
+  <script async defer src="https://apis.google.com/js/api.js" onload="this.onload=function(){};handleClientLoad()"
+    onreadystatechange="if (this.readyState === 'complete') this.onload()">
     </script>
-  </body>
+</body>
 
 </html>
