@@ -91,29 +91,38 @@
         <form>
           <div class="form-group">
             <label for="f_expense_date" class="col-form-label">Date:</label>
-            <input type="date" data-date-format="DD MMMM YYYY" class="form-control" id="f_expense_date">
+            <input type="date" data-date-format="DD MMMM YYYY" class="form-control" id="f_expense_date" required>
+
+            <label for="f_expense_amount" class="col-form-label">Amount:</label>
+            <input type="number" class="form-control" id="f_expense_amount">
+
+            <label for="f_expense_vendor" class="col-form-label">Description:</label>
+            <input type="text" class="form-control" id="f_expense_vendor">
+
+            <label for="f_expense_tx_type" class="col-form-label">Transaction Type:</label>
+            <select class="custom-select form-control" id="f_expense_tx_type"></select>
+
+            <label for="f_expense_category" class="col-form-label">Category :</label>
+            <select type="custom-select form-control" class="form-control" id="f_expense_category">
+                <option selected value='-1'>Choose any</option>
+            </select>
+
+            <input type="hidden" id="f_expense_append_or_update" value='-1'></input>
+
           </div>
           <div class="form-group">
-              <label for="f_expense_amount" class="col-form-label">Amount:</label>
-              <input type="number" class="form-control" id="f_expense_amount">
+             
           </div>
           <div class="form-group">
-              <label for="f_expense_vendor" class="col-form-label">Description:</label>
-              <input type="text" class="form-control" id="f_expense_vendor">
+
           </div>
           <div class="form-group">
-              <label for="f_expense_tx_type" class="col-form-label">Transaction Type:</label>
-              <select class="custom-select form-control" id="f_expense_tx_type">
-              </select>
+
           </div>
           <div class="form-group">
-              <label for="f_expense_category" class="col-form-label">Category :</label>
-              <select type="custom-select form-control" class="form-control" id="f_expense_category">
-                  <option selected value='-1'>Choose any</option>
-                </select>
+
           </div>
-          <input type="hidden" id="f_expense_append_or_update" value='-1'>
-          </input>
+
         </form>
       </div>
       <div class="modal-footer">

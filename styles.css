@@ -107,6 +107,11 @@ nav > a {
 .modal-body {
     max-height: 75vh;
     overflow: scroll;
+
+    padding-top: 0px;
+    padding-right: 1rem;
+    padding-bottom: 0px;
+    padding-left: 1rem;
 }
 
 .icon-tx-category {
