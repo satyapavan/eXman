@@ -124,9 +124,11 @@ function handleTxAlert(status, message) {
     $('#tx-alert-content').html("Thank you for utilizing the services");
 
   $(".tx-alert").show();
-  setTimeout(function () {
-    $(".tx-alert").hide();
-  }, 3000);
+  if(status !== "error") {
+      setTimeout(function () {
+        $(".tx-alert").hide();
+      }, 3000);
+  }
 }
 
 function initScreen() {
@@ -257,7 +259,6 @@ function drawTxTypeChart() {
     expDetailsDataTable.addColumn('string', 'Type'); // Icon for the Category
     expDetailsDataTable.addColumn('string', 'Mode'); // Icon for the tx type
 
-    var total_expense = 0;
 
     var range = response.result;
     if (range.values.length > 0) {
@@ -267,8 +268,6 @@ function drawTxTypeChart() {
 
         var amount = parseInt((row[1]).replace(',', ''));
         var txtype = row[3];
-
-        total_expense = total_expense + amount;
 
         const category = (row[4] != undefined) ? row[4] : "Others" ;
 
@@ -283,10 +282,13 @@ function drawTxTypeChart() {
 
       setTimeout(function() {
           console.log("Started drawing pie chart");
-          var chartDataTable = google.visualization.data.group(expDetailsDataTable, [4],
-            [{ 'column': 1, 'aggregation': google.visualization.data.sum, 'type': 'number' }]);
 
-          document.getElementById('btn_total_exp').innerHTML = '<i class="fas fa-rupee-sign"></i> ' + total_expense;
+          // This ensures that 'Binami' transactions are not catogerized, but still visible under the data grid transactions.
+          var chartDataView = new google.visualization.DataView(expDetailsDataTable);
+          chartDataView.hideRows(chartDataView.getFilteredRows([{column: 4, value: 'Binami'}]));
+
+          var chartDataTable = google.visualization.data.group(chartDataView, [4],
+            [{ 'column': 1, 'aggregation': google.visualization.data.sum, 'type': 'number' }]);
 
           const chartOptions = {
             chartArea: { width: '100%', height: '95%' },
@@ -297,8 +299,31 @@ function drawTxTypeChart() {
             pieSliceText: 'label'
           };
 
+          // Setting the total expense details from view
+
+          var total_expense = 0;
+          var visible_rows = chartDataView.getViewRows(); // Array of numbers // Returns the rows in this view, in order.
+
+          if (visible_rows.length > 0) {
+            for (i = 0; i < visible_rows.length; i++) {
+
+              // Below should be DataTable and not DataView for this to work correctly.
+              // else we will get invalid row index error.
+
+              var row = expDetailsDataTable.getValue(visible_rows[i], 1);
+              // Print columns A and E, which correspond to indices 0 and 4.
+
+              var amount = parseInt((row)); // .replace(',', ''));
+              total_expense = total_expense + amount;
+            }
+          }
+          
+          document.getElementById('btn_total_exp').innerHTML = '<i class="fas fa-rupee-sign"></i> ' + total_expense;
+
+          // Invoke the draw method.          
           var chart = new google.visualization.PieChart(document.getElementById('tx_type_pie_chart_div'));
           chart.draw(chartDataTable, chartOptions);
+
           console.log("Completed drawing pie chart");
       });
 
@@ -366,3 +391,17 @@ function drawTxTypeChart() {
     console.log('Error: ' + response.result.error.message);
   });
 }
+
+
+// window.addEventListener('load', async e => {
+//   console.log("Entered into 'load' listener for Service Worker registery");
+
+//   if('serviceWorker' in navigator) {
+//     try {
+//       navigator.serviceWorker.register('sw.js');
+//       console.log("Service Worker is registered");
+//     } catch (error) {
+//       console.error("Service Worker failed to register");
+//     }
+//   }
+// });
