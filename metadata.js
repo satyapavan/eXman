@@ -4,7 +4,7 @@ const SS_HH_EE_EE_TT_II_DD = '1I9xBLU7LZ3ZRO6pe0DdtUGgvgNrBF3sRPxbOVQiSFpE';
 
 // 1DueNTkz7YAAWurv--t0hTmeEOtFxJOUUqPUEHCSZz24
 
-const ARRAY_TX_TYPE = [ 'Cash', 'Credit Card', 'ICICI', 'PayTm', 'Sodexo', 'BHIM'];
+const ARRAY_TX_TYPE = [ 'Cash', 'Credit Card', 'ICICI', 'PayTm', 'Sodexo', 'BHIM', 'PhonePe'];
 const ARRAY_TX_CATEGORY = ['Daily Needs', 'Transport', 'Home Maintainance', 'Health', 'Eating Out', 'Entertainment', 'Outstation', 'Clothing', 'Office', 'Binami', 'Others'];
 const MONTH_NUM_TO_MMM = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
@@ -28,7 +28,8 @@ const TX_TYPE_ICONS = [
     '<img src="icon-icici.png" class="icon-tx-type icon-icici">',
     '<img src="icon-paytm.png" class="icon-tx-type icon-paytm">',
     '<img src="icon-sodexo.png" class="icon-tx-type icon-sodexo">',
-    '<img src="icon-bhim.png" class="icon-tx-type icon-bhim">'
+    '<img src="icon-bhim.png" class="icon-tx-type icon-bhim">',
+    '<img src="icon-phonepe.png" class="icon-tx-type icon-phonepe">'
 ];
 
 // Array of API discovery doc URLs for APIs used by the quickstart
